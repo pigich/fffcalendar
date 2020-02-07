@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    flex-direction: column
+    }
+    .container div{
+    border: 1px #ccc solid;
+    padding: 10px;
+    }
+    
+    .box-1 {
+    flex:2;
+    }
+    .box-2 {
+    flex:2;
+    }    
+     .box-3 {
+    flex:2;
+    } 

@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from './shared/_model/User';
-import { AuthenticationService } from './shared/service/authentication.service';
+import { User } from '../shared/_model/User';
+import { AuthenticationService } from '../shared/service/authentication.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-auth',
+  templateUrl: './auth.component.html',
 })
-export class AppComponent {
+export class AuthComponent implements OnInit {
+  title = 'auth';
   currentUser: User;
 
   constructor(
@@ -16,6 +16,9 @@ export class AppComponent {
     private authenticationService: AuthenticationService
   ) {
     this.authenticationService.currentUser.subscribe(user => this.currentUser = user);
+  }
+  ngOnInit() {
+    this.router.navigate(['/login']);
   }
 
   logout() {
