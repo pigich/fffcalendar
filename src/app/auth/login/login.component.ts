@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/shared/service/authentication.service';
-import { UserService } from 'src/app/shared/service/user.service';
 import { MessageService } from 'src/app/shared/service/message.service';
 
 @Component({
@@ -45,13 +44,12 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authenticationService.authUser(this.formControls.login.value, this.formControls.password.value)
       .pipe(first())
-      .subscribe(() => {
+      .subscribe((data) => {
         this.router.navigate([this.returnUrl]);
         this.loading = false;
       },
         error => {
-          console.log('error in auth', error.message);
-          // this.messageService.error(error);
+          this.messageService.error(error);
           this.loading = false;
         });
     this.loading = false;

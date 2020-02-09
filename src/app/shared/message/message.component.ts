@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 export class MessageComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
-  message: any;
+  public message: any;
 
   constructor(private messageService: MessageService) { }
 
@@ -19,10 +19,10 @@ export class MessageComponent implements OnInit, OnDestroy {
       .subscribe(message => {
         switch (message && message.type) {
           case 'success':
-            message.cssClass = 'alert alert-success';
+            message.cssClass = 'app-message message-success';
             break;
           case 'error':
-            message.cssClass = 'alert alert-danger';
+            message.cssClass = 'app-message message-danger';
             break;
         }
         this.message = message;

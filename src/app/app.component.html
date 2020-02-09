@@ -1,5 +1,5 @@
 <div class="content" role="main">
-  <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+  <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUserData">
     <div class="navbar-nav">
         <button class="nav-item nav-link" (click)="logout()">Logout</button>
     </div>
@@ -11,5 +11,6 @@
 <div>
 
 </div>
+<app-message></app-message>
 <router-outlet>
 </router-outlet>

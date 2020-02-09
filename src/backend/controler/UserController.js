@@ -1,43 +1,21 @@
 const User = require('../model/User');
+const express = require('express');
+const router = express.Router();
 const userService = require('../service/UserService');
+/*eslint-env node*/
 
-exports.index = async function (req, res) {
-    await User.get(function (err, users) {
-        if (err) {
-            res.json({
-                status: "error",
-                message: err,
-            });
+router.post('/users/login', async (req, res) => {
+    try {
+        const { login, password } = req.body
+        const user = await User.findByLogin(login, password)
+        if (!user ) {
+            return res.status(401).send({ message: 'Bad credentials!' })
         }
-        res.json({
-            status: "success",
-            data: users
-        });
-    });
-};
+        const token = userService.generateToken(login)
+        return res.send({ user, token })
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
 
-exports.findByLogin = async function (req, res) {
-    await User.findOne({ login: req.params.login }, function (err, user) {
-        if (err) {
-            res.send(err);
-        }
-        res.json({
-            status: "success",
-            data: user
-        });
-    });
-};
-exports.login = async function (req, res) {
-    await User.findOne({ login: req.params.login }, function (err, user) {
-        const password = req.params.password;
-        if (err) {
-            res.send(err);
-        }
-        if (userService.auth(user, password)) {
-            res.json({
-                status: "success",
-                data: user
-            });
-        }
-    });
-};
+module.exports = router;

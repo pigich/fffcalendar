@@ -1,13 +1,11 @@
+/*eslint-env node*/
+const props = require('../config/properties');
+const jwt = require('jsonwebtoken')
 
+exports.checkCredentials = (user, password) => {
+    return password === user.password;
+};
 
-
-exports.auth = async function (user, password) {
-    if (!user) {
-        throw new Error({ error: 'Invalid login credentials' })
-    }
-    const isPasswordMatch = await bcrypt.compare(password, user.password)
-    if (!isPasswordMatch) {
-        throw new Error({ error: 'Invalid login credentials' })
-    }
-    return true;
+exports.generateToken = (login) => {
+    return jwt.sign({ login }, props.JWT_KEY);
 };

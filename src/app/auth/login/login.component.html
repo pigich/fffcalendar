@@ -1,30 +1,26 @@
-<p class=" text-xs-center"> Login </p>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="container">
-        <div class="box-1">
-            <label for="login">Login</label>
-            <input type="text" formControlName="login" class="form-control" placeholder="login" [ngClass]="{ 'has-error': formControls.login.invalid &&
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card">
+    <h2></h2>
+    <div class="form-header">Login</div>
+    <div class="form-control">
+        <label class="label" for="login">Login:</label>
+        <input type="text" formControlName="login" placeholder="login" [ngClass]="{ 'has-error': formControls.login.invalid &&
                    formControls.login.touched }" />
-            <div *ngIf="formControls.login.invalid &&
-              this.loginForm.controls.login.touched" class="invalid-feedback">
-                <div *ngIf="formControls.login.errors.required">login is required</div>
-                <div *ngIf="formControls.login.errors.pattern">Required only symbols </div>
-                <div *ngIf="formControls.login.errors.maxlength">Max length 5 symbols </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" formControlName="password" class="form-control" placeholder="password" [ngClass]="{ 'is-invalid':formControls.password.invalid &&
-                  formControls.password.touched }" />
-            <div *ngIf="formControls.password.invalid &&
-              formControls.password.touched" class="invalid-feedback">
-                <div *ngIf="formControls.password.errors.required">Password is required</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <button [disabled]="loading" class="btn btn-primary">
-                Login
-            </button>
+        <div class="validation" *ngIf="formControls.login.invalid &&
+              this.loginForm.controls.login.touched">
+            <small class="validation" *ngIf="formControls.login.errors.required">login is required</small>
+            <small class="validation" *ngIf="formControls.login.errors.pattern">Required only symbols </small>
+            <small class="validation" *ngIf="formControls.login.errors.maxlength">Max length 5 symbols </small>
         </div>
     </div>
+    <div class="form-control">
+        <label class="label" for="password">Password:</label>
+        <input type="password" formControlName="password" placeholder="password" [ngClass]="{ 'has-error':formControls.password.invalid &&
+                  formControls.password.touched }" />
+        <div class="validation" *ngIf="formControls.password.invalid && formControls.password.touched">
+            <small *ngIf="formControls.password.errors.required">Password is required</small>
+        </div>
+    </div>
+        <button [disabled]="loading" class="btn btn-primary">
+            Login
+        </button>
 </form>
