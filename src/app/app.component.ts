@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from './shared/_model/User';
 import { AuthenticationService } from './shared/service/authentication.service';
 import { Data } from './shared/_model/Data';
 
@@ -10,7 +9,6 @@ import { Data } from './shared/_model/Data';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  // currentUser: User;
   currentUserData: Data;
 
   constructor(
