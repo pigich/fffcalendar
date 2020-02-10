@@ -1,74 +1,168 @@
 :root {
-    --primary-color: #2672ca;
-    --light-color: #f4f4f4;
-    --danger-color: #dc3545;
-    --success-color: #28a745;
-  }
+  --primary-color: #2672ca;
+  --light-color: #f4f4f4;
+  --danger-color: #dc3545;
+  --success-color: #28a745;
+}
 
-  body {
+.calendar-date {
+  margin: 10px 0;
+}
+.calendar-month,
+.calendar-year,
+.calendar-set {
+  padding: 10px;
+  margin: 5px;
+  font-size: 1.2em;
+  border: 0;
+  background: #33d5fd;
+  color: #fff;
+}
+
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar tr td:nth-child(6),
+td:nth-child(7) {
+  background: #dbd5d5;
+}
+.calendar tr.head td {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  background: #4ea04b;
+  padding: 15px;
+  text-align: center;
+}
+
+.calendar tr.day td {
+  border: 1.1px solid rgb(206, 205, 205);
+  width: 14.28%;
+  padding: 15px 5px;
+  vertical-align: top;
+}
+
+.calendar tr.day td:hover {
+  background: #faf1cf;
+}
+
+.calendar tr td.blank {
+  background: #f5f5f5;
+}
+
+.calendar .dd {
+  font-size: 1.2em;
+  color: #999;
+}
+
+.calendar .evt {
+  margin-top: 5px;
+  font-size: 0.8em;
+  font-weight: bold;
+  overflow: hidden;
+  color: #ff5d5d;
+}
+
+.calendar-event form {
+  padding: 15px;
+  margin-top: 20px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+}
+.calendar-event h1 {
+  color: #333;
+  padding: 0;
+  margin: 0;
+}
+.evt-date {
+  color: #999;
+  margin: 10px 0;
+}
+.calendar-event textarea {
+  display: block;
+  box-sizing: padding-box;
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  resize: none;
+}
+.calendar-event input[type="button"],
+.calendar-event input[type="submit"] {
+  padding: 10px;
+  margin: 5px;
+  font-size: 1.2em;
+  border: 0;
+  background: #ea4c4c;
+  color: #fff;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  font-family: "lato", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: #fff;
+  color: #333;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 2rem;
+}
+
+.form-header {
+  font-size: 20px;
+  text-align: center;
+  margin: 0;
+}
+
+.card {
+  padding: 1rem;
+  border: #ccc 1px solid;
+  margin: 0.7rem 0;
+
+  &-header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    min-height: 100%;
-    font-family: 'lato', sans-serif;
-    font-size: 1rem;
-    line-height: 1.6;
-    background-color: #fff;
-    color: #333;
   }
 
-  .container {
-    max-width: 1100px;
-    margin: auto;
-    overflow: hidden;
-    padding: 0 2rem;
+  &-content {
+    margin-bottom: 0.5rem;
   }
+}
+label {
+  color: #333;
+}
 
-  .form-header{
-    font-size:20px;
-    text-align: center;
-    margin:0;
-  }
+.form-control {
+  display: block;
+  color: #888;
+  margin-bottom: 0.8rem;
+  padding-right: 0.8rem;
 
-  .card {
-    padding: 1rem;
-    border: #ccc 1px solid;
-    margin: 0.7rem 0;
-  
-    &-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  
-    &-content {
-      margin-bottom: .5rem;
-    }
-  }
-  label {
-    color: #333;
-  }
-
-  .form-control {
-    display: block;
-    color: #888;
-    margin-bottom: .8rem;
-    padding-right: .8rem;
-  
-    &.has-error {
-      color: var(--danger-color);
-      input {
-        border-color: var(--danger-color);
-      }
-    }
-  
-    .validation {
-      color: var(--danger-color);
+  &.has-error {
+    color: var(--danger-color);
+    input {
+      border-color: var(--danger-color);
     }
   }
 
-input[type='text'],
-input[type='password'] {
+  .validation {
+    color: var(--danger-color);
+  }
+}
+
+input[type="text"],
+input[type="password"] {
   display: block;
   width: 100%;
   padding: 0.4rem;
@@ -76,60 +170,58 @@ input[type='password'] {
   border: 1px solid #ccc;
 }
 
-input[type='submit'],
+input[type="submit"],
 button {
   font: inherit;
 }
 
-  .btn {
-    border-radius: 5px;
-    display: inline-block;
-    color: #333;
-    padding: 0.4rem 1.3rem;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    margin-right: 0.5rem;
-    outline: none;
-  
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-  }
+.btn {
+  border-radius: 5px;
+  display: inline-block;
+  color: #333;
+  padding: 0.4rem 1.3rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  outline: none;
 
-  .btn-primary {
-    background-color: rgb(77, 120, 236);
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.btn-primary {
+  background-color: rgb(77, 120, 236);
+  color: white;
+  &:hover {
+    background-color: rgb(46, 97, 240);
     color: white;
-    &:hover {
-      background-color: rgb(46, 97, 240);
-      color: white;
-    }
   }
+}
 
-  .text-success {
-    color: var(--success-color);
-  }
-  
-  .text-danger {
-    color: var(--danger-color);
-  }
+.text-success {
+  color: var(--success-color);
+}
 
-  .message {
-    padding: 0.7rem;
-    margin: 1rem 0;
-    opacity: 0.9;
-    background: var(--light-color);
-    color: #333;
-  }
+.text-danger {
+  color: var(--danger-color);
+}
 
+.message {
+  padding: 0.7rem;
+  margin: 1rem 0;
+  opacity: 0.9;
+  background: var(--light-color);
+  color: #333;
+}
 
 .message-light {
   background: var(--light-color);
   color: #333;
   text-align: center;
 }
-
 
 .message-danger {
   background: var(--danger-color);

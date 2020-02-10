@@ -1,2 +1,9 @@
 <p>calendar works!</p>
-
+<div class="calendar-date">
+    <select [value]="selectedMonth" class="calendar-month" (change)="onMonthChange($event.target.value)">
+    </select>
+    <select [value]="selectedYear" class="calendar-year" (change)="onYearChange($event.target.value)">
+    </select>
+</div>
+<div class="calendar"></div>
+<div class="calendar-event"></div>
