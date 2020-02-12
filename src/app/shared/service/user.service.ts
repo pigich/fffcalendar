@@ -3,14 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { User } from '../_model/User';
+import { BaseApi } from './base-api';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class UserService extends BaseApi {
 
-  constructor(private http: HttpClient) { }
+  constructor(public http: HttpClient) {
+    super(http);
+  }
 
+  // temp method 
   findUserByLogin(login: string): Observable<User> {
-    return this.http.get(`http://localhost:3000/users?login=${login}`)
+    return this.get(`users?login=${login}`)
       .pipe(map((user: User) => user[0] ? user[0] : undefined));
   }
 

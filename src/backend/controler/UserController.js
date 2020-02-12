@@ -4,7 +4,7 @@ const router = express.Router();
 const userService = require('../service/UserService');
 /*eslint-env node*/
 
-router.post('/users/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const { login, password } = req.body
         const user = await User.findByLogin(login, password)

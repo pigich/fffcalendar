@@ -3,11 +3,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MessageComponent } from './message/message.component';
 import { CommonModule } from '@angular/common';
-
+import { JwPaginationComponent } from 'jw-angular-pagination';
 
 @NgModule({
   declarations: [
     MessageComponent,
+    JwPaginationComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -19,7 +20,8 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    MessageComponent
+    MessageComponent,
+    JwPaginationComponent
   ]
 })
 export class SharedModule { }

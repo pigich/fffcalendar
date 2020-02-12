@@ -1,13 +1,57 @@
 :root {
   --primary-color: #2672ca;
+  --primary-light-color: #75b4fc;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
+  --table-header-color: #4ea04b;
+  --table-odd-row-color: #ece5e5;
+}
+
+.view-side-form {
+  .side-form {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: 100%;
+    overflow: auto;
+    background: #fff;
+    padding: 20px;
+    border-left: 1px solid #e0e0e0;
+  }
+}
+
+.tasks table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 1em;
+  overflow: hidden;
+  background: #ddd;
+}
+
+.tasks table th {
+  background: var(--table-header-color);
+}
+.tasks table td {
+  font-size: 0.8em;
+}
+.tasks table tr:hover {
+  background-color: var(--primary-light-color);
+}
+
+.tasks table th,
+table td {
+  text-align: center;
+  padding: 0.7em;
+  border-bottom: 3px solid white;
 }
 
 .calendar-date {
   margin: 10px 0;
 }
+
 .calendar-month,
 .calendar-year,
 .calendar-set {
@@ -107,7 +151,7 @@ body {
   font-family: "lato", sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #fff;
+  background-color: #c8c8c8;
   color: #333;
 }
 
@@ -123,10 +167,18 @@ body {
   text-align: center;
   margin: 0;
 }
+.add-task {
+  width: 50%;
+  height: 25%;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .card {
+  border-radius: 1em;
+  background-color: white;
   padding: 1rem;
-  border: #ccc 1px solid;
+  // border: #ccc 1px solid;
   margin: 0.7rem 0;
 
   &-header {
@@ -191,12 +243,26 @@ button {
     opacity: 0.6;
   }
 }
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
 
 .btn-primary {
   background-color: rgb(77, 120, 236);
   color: white;
   &:hover {
     background-color: rgb(46, 97, 240);
+    color: white;
+  }
+}
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  &:hover {
+    background-color: #c41c2d;
     color: white;
   }
 }

@@ -1,29 +1,29 @@
 import { Injectable } from '@angular/core';
-import { User } from '../_model/User';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { UserService } from './user.service';
-import { Data } from '../_model/Data';
+import { BaseData } from '../_model/BaseData';
+import { BaseApi } from './base-api';
 
 @Injectable({ providedIn: 'root' })
-export class AuthenticationService {
-  public currentUserData: Observable<Data>;
-  private currentUserSubject: BehaviorSubject<Data>;
+export class AuthenticationService extends BaseApi {
+  public currentUserData: Observable<BaseData>;
+  private currentUserSubject: BehaviorSubject<BaseData>;
 
-  constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<Data>(
+  constructor(public http: HttpClient) {
+    super(http);
+    this.currentUserSubject = new BehaviorSubject<BaseData>(
       JSON.parse(localStorage.getItem('currentUserData')));
     this.currentUserData = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): Data {
+  public get currentUserValue(): BaseData {
     return this.currentUserSubject.value;
   }
 
-  authUser(login: string, password: string): Observable<Data> {
-    return this.http.post(`http://localhost:1337/users/login`, { login, password })
-      .pipe(map((data: Data) => {
+  authUser(login: string, password: string): Observable<BaseData> {
+    return this.post('login', { login, password })
+      .pipe(map((data: BaseData) => {
         if (data) {
           localStorage.setItem('currentUserData', JSON.stringify(data));
           this.currentUserSubject.next(data);
@@ -31,7 +31,6 @@ export class AuthenticationService {
         }
       }
       ));
-
   }
 
   logout() {

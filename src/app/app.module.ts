@@ -12,6 +12,10 @@ import { MessageService } from './shared/service/message.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './shared/_interceptor/error.interceptor';
 import { AuthInterceptor } from './shared/_interceptor/auth.interceptor';
+import { TaskModule } from './main/task.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TaskService } from './shared/service/task.service';
+import { PublishService } from './shared/service/publish.service';
 
 @NgModule({
   declarations: [
@@ -22,10 +26,14 @@ import { AuthInterceptor } from './shared/_interceptor/auth.interceptor';
     BrowserModule,
     AppRoutingModule,
     AuthModule,
-    SharedModule
+    SharedModule,
+    TaskModule,
+    BrowserAnimationsModule
   ],
   providers: [
     UserService,
+    TaskService,
+    PublishService,
     AuthenticationService,
     MessageService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

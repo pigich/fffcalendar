@@ -15,22 +15,37 @@ const userSchema = mongoose.Schema({
         required: true
     },
     taskList
-        : {
-        type: Array,
-        required: true
-    }
+        : [
+            {
+                id: Number,
+                name: String,
+                startDate: Date,
+                finishDate: Date,
+                comment: String
+            }
+        ]
 });
 
 userSchema.statics.findByLogin = async (login, password) => {
-    let user = await User.findOne({ login })
+    let user = await User.findOne({ login }, { taskList: false, _id: false })
     if (!user) {
         return null;
     }
-    const isValid = await userService.checkCredentials(user, password);
+    const isValid = userService.checkCredentials(user, password);
     if (!isValid) {
         return null;
     }
-    return user
+    return { id: user.id, login: user.login }
+}
+
+userSchema.statics.findTasks = async (id) => {
+    let tasks = await User.findOne({ id }, { taskList: true, _id: false })
+    return tasks;
+}
+
+userSchema.statics.findTaskById = async (taskId, userId) => {
+    let tasks = await User.find({ id: userId, "taskList.id": taskId }, { "taskList.$": 1, _id: 0 })
+    return tasks;
 }
 
 const User = mongoose.model('User', userSchema)

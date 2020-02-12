@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/service/authentication.service';
-import { Data } from '../shared/_model/Data';
+import { BaseData } from '../shared/_model/BaseData';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
 })
 export class AuthComponent implements OnInit {
- public currentUserData: Data;
+ public currentUserData: BaseData;
 
   constructor(
     private router: Router,

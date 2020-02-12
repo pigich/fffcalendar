@@ -13,7 +13,7 @@ import { MessageService } from 'src/app/shared/service/message.service';
 
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  returnUrl = '/calendar';
+  returnUrl = '/tasks';
   loading = false;
 
   constructor(
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private messageService: MessageService
     ) {
     if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/calendar']);
+      this.router.navigate(['/tasks']);
     }
   }
 
@@ -35,7 +35,9 @@ export class LoginComponent implements OnInit {
 
   }
 
-  get formControls() { return this.loginForm.controls; }
+  get formControls() {
+    return this.loginForm.controls;
+  }
 
   onSubmit() {
     if (this.loginForm.invalid) {

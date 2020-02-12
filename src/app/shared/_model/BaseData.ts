@@ -1,6 +1,6 @@
 import { User } from './User';
 
-export class Data {
+export class BaseData {
     user: User;
     token: string;
 }

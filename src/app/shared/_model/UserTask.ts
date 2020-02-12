@@ -1,4 +1,4 @@
-export class UserEvent {
+export class UserTask {
     id: number;
     name: string;
     startDate: Date;

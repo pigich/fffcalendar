@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const app = express();
 const userRotes = require('./controler/UserController');
+const taskRotes = require('./controler/TaskController');
 const props = require('./config/properties');
 
 mongoose.connect(props.MONGO_URL, { useCreateIndex: true, useUnifiedTopology: true, useNewUrlParser: true });
@@ -23,6 +24,7 @@ app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(userRotes)
+app.use(taskRotes)
 app.listen(props.PORT, function () {
     console.log('Backend is listening to the port: ' + props.PORT)
 });

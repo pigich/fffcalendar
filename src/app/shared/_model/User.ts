@@ -1,8 +1,8 @@
-import { UserEvent } from './UserEvent';
+import { UserTask } from './UserTask';
 
 export class User {
     id: number;
     login: string;
     password: string;
-    taskList: Array<UserEvent>;
+    taskList: Array<UserTask>;
 }
