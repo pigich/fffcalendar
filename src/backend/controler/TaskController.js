@@ -67,4 +67,17 @@ router.delete('/tasks/delete/:taskId', async (req, res) => {
     }
 })
 
+router.put('/tasks/share', async (req, res) => {
+    try {
+        const { login, task } = req.body
+        const answer = await User.shareTask(login, task)
+        if (!answer) {
+            return res.status(401).send({ message: 'Data not shared' })
+        }
+        return res.status(200).send({ message: 'Data shared' })
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
 module.exports = router;

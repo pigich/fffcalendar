@@ -42,9 +42,13 @@ export class TaskService extends BaseApi {
     return this.put(`tasks/update`, { userId: this.userId, task });
   }
 
-  // if the name of method  will equal to name of http method then will be recursion !!!
+  // if the name of method  will equal to the name of http method then will be recursion !!!
   deleteTaskById(id: string) {
     return this.delete(`tasks/delete/${id}?userId=${this.userId}`);
+  }
+
+  share(login: string, task: any) {
+    return this.put(`tasks/share`, { login, task });
   }
 }
 

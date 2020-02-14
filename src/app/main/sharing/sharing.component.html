@@ -1,0 +1,23 @@
+<div class="add-task">
+    <div class="card">
+        <form [formGroup]="taskForm" (ngSubmit)="shareTask()" class="card">
+            <div class="form-header">{{title}}</div>
+            <app-message></app-message>
+            <div class="form-control">
+                <label class="label" for="name">Enter user login to share task:</label>
+                <input type="text" formControlName="login"
+                    [ngClass]="{'has-error': formControls.login.invalid && formControls.login.touched }" />
+                <div class="validation" *ngIf="formControls.login.invalid && formControls.login.touched">
+                    <small class="validation" *ngIf="formControls.login.errors.required">login is required</small>
+                    <small class="validation" *ngIf="formControls.login.errors.pattern">Required only symbols </small>
+                    <small class="validation" *ngIf="formControls.login.errors.maxlength">Max length 5 symbols
+                    </small>
+                </div>
+            </div>
+            <button [disabled]="saving" class="btn btn-primary">
+                Share
+            </button>
+            <a class="btn btn-primary" routerLink="/tasks">Cancel</a>
+        </form>
+    </div>
+</div>

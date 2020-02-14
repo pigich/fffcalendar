@@ -46,12 +46,10 @@ export class CalendarComponent implements OnInit {
   }
   onMonthChange(value: number) {
     this.currentMonth = +value;
-    console.log(this.currentMonth);
     this.showCalendar();
   }
   onYearChange(value: number) {
     this.currentYear = +value;
-    console.log(this.currentYear);
     this.showCalendar();
   }
 
@@ -80,7 +78,6 @@ export class CalendarComponent implements OnInit {
   showCalendar() {
     this.currentMonth = this.currentMonth;
     this.currentYear = this.currentYear;
-    console.log(this.currentMonth, ' ', this.currentYear);
     const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
     const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
     const lastDayOfMonth = new Date(this.currentYear, this.currentMonth, daysInMonth).getDay();

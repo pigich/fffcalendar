@@ -49,14 +49,12 @@ export class TaskComponent implements OnInit, OnDestroy {
         });
   }
 
-  deleteTask(id: string) {
+  deleteTask(taskId: string) {
     this.loading = true;
-    console.log('this.selectedTask.id ', this.selectedTask._id);
-    console.log('deleteTask(id: string)  ', id);
-    this.taskService.deleteTaskById(id)
+    this.taskService.deleteTaskById(taskId)
       .subscribe(
         () => {
-          this.taskList = this.taskList.filter(x => x._id !== id);
+          this.taskList = this.taskList.filter(x => x._id !== taskId);
         },
         (error) => {
           this.messageService.error(error);
@@ -65,14 +63,25 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  getSelected(task: UserTask) {
+  private saveTaskToSessionStorage(taskId: string) {
+    const selectedTask = this.taskList.find((task) => task._id === taskId);
+    sessionStorage.setItem('selectedTask', JSON.stringify(selectedTask));
+  }
+
+  shareTask(id: string) {
+    this.saveTaskToSessionStorage(id);
+    this.router.navigate([`/tasks/share/${id}`]);
+  }
+
+  getSelectedTask(task: UserTask) {
     return this.selectedTask = task;
   }
 
-  edit(event, task: UserTask) {
-    if (!event.target.className.includes('delete-task-td')) {
-      console.log('this.selectedTask ', task._id);
+  editTask(event, task: UserTask) {
+    if (!event.target.className.includes('delete-task-td')
+      && !event.target.className.includes('share-task-td')) {
       const taskId = task._id;
+      this.saveTaskToSessionStorage(taskId);
       this.router.navigate([`/tasks/edit/${taskId}`]);
     }
   }

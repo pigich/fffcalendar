@@ -96,10 +96,16 @@ export class AddTaskComponent implements OnInit {
 
     const action = this.currentTask._id ? 'update' : 'create';
     this.taskService[action](this.currentTask)
-      .subscribe(() => {
-        this.router.navigate(['/tasks']);
-        this.publishService.publish('tasks-updated');
-      });
+      .subscribe(
+        () => {
+          this.router.navigate(['/tasks']);
+          this.publishService.publish('tasks-updated');
+        },
+        (error) => {
+          this.router.navigate(['/tasks']);
+          this.messageService.error(error);
+        }
+      );
     this.saving = false;
   }
 }

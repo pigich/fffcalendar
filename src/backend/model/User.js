@@ -59,7 +59,6 @@ userSchema.statics.insertTask = async (userId, task) => {
 }
 
 userSchema.statics.updateTask = async (userId, task) => {
-    console.log('task, ', task);
     let tasks = await User.updateOne(
         { id: userId, "taskList._id": task._id },
         { $set: { 'taskList.$': task } }
@@ -71,6 +70,25 @@ userSchema.statics.deleteTask = async (taskId, userId) => {
     let tasks = await User.updateOne(
         { id: userId },
         { $pull: { taskList: { _id: taskId } } }
+    )
+    return tasks;
+}
+
+userSchema.statics.shareTask = async (userLogin, task) => {
+    let taskExist = await User.findOne(
+        { login: userLogin, "taskList._id": task._id },
+        { _id: 1 }
+    )
+    let tasks;
+    if (taskExist !== null) {
+        tasks = await User.updateOne(
+            { login: userLogin, "taskList._id": task._id },
+            { $set: { 'taskList.$': task } },
+        )
+    }
+    tasks = await User.updateOne(
+        { login: userLogin },
+        { $addToSet: { taskList: task } },
     )
     return tasks;
 }
