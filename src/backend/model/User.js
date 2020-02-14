@@ -17,7 +17,6 @@ const userSchema = mongoose.Schema({
     taskList
         : [
             {
-                id: Number,
                 name: String,
                 startDate: Date,
                 finishDate: Date,
@@ -44,7 +43,35 @@ userSchema.statics.findTasks = async (id) => {
 }
 
 userSchema.statics.findTaskById = async (taskId, userId) => {
-    let tasks = await User.find({ id: userId, "taskList.id": taskId }, { "taskList.$": 1, _id: 0 })
+    let tasks = await User.findOne(
+        { id: userId, "taskList._id": taskId },
+        { "taskList.$": 1, _id: 0 }
+    )
+    return tasks;
+}
+
+userSchema.statics.insertTask = async (userId, task) => {
+    let tasks = await User.updateOne(
+        { id: userId },
+        { $push: { taskList: task } }
+    )
+    return tasks;
+}
+
+userSchema.statics.updateTask = async (userId, task) => {
+    console.log('task, ', task);
+    let tasks = await User.updateOne(
+        { id: userId, "taskList._id": task._id },
+        { $set: { 'taskList.$': task } }
+    )
+    return tasks;
+}
+
+userSchema.statics.deleteTask = async (taskId, userId) => {
+    let tasks = await User.updateOne(
+        { id: userId },
+        { $pull: { taskList: { _id: taskId } } }
+    )
     return tasks;
 }
 

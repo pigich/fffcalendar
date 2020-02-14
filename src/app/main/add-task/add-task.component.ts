@@ -5,8 +5,7 @@ import { TaskService } from 'src/app/shared/service/task.service';
 import { PublishService } from 'src/app/shared/service/publish.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserTask } from 'src/app/shared/_model/UserTask';
-import { AuthenticationService } from 'src/app/shared/service/authentication.service';
-import { trigger, state, transition, style, animate } from '@angular/animations';
+import { MessageService } from 'src/app/shared/service/message.service';
 
 @Component({
   selector: 'app-add-task',
@@ -16,12 +15,11 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
   host: { '[@slideInOutAnimation]': '' }
 })
 export class AddTaskComponent implements OnInit {
-  title: string;
-  task: any = {};
-  saving = false;
+  public title: string;
+  public currentTask: any = {};
+  public newTask: UserTask;
+  public saving = false;
   public taskForm: FormGroup;
-  public loading = false;
-  public selectedTask: UserTask = new UserTask();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,35 +27,79 @@ export class AddTaskComponent implements OnInit {
     private router: Router,
     private taskService: TaskService,
     private publishService: PublishService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
-    this.taskForm = this.formBuilder.group({
-      name: ['', Validators.required, Validators.maxLength(20)],
-      comment: ['', Validators.maxLength(100)]
-    });
-    this.title = 'Add Task';
+    this.initializeForm();
+    this.getTask();
+  }
 
-    const taskId = Number(this.route.snapshot.params.id);
-    console.log('!!!!!!!!!!!!!!!!!taskId ', taskId);
+  private getTask() {
+    const taskId = this.route.snapshot.params.id;
+    if (!taskId) {
+      this.title = 'Add Task';
+      this.newTask = new UserTask();
+      this.taskForm.patchValue(
+        {
+          startDate: this.getDatetimeLocal(this.newTask.startDate),
+          finishDate: this.getDatetimeLocal(this.newTask.finishDate),
+        });
+    }
     if (taskId) {
       this.title = 'Edit Task';
-      this.taskService. findById(taskId).subscribe(x => this.task = x);
+      this.taskService.findById(taskId)
+        .subscribe(
+          (data) => {
+            this.currentTask = data.user.taskList[0];
+            this.taskForm.patchValue(
+              {
+                name: this.currentTask.name,
+                comment: this.currentTask.comment,
+                startDate: this.getDatetimeLocal(this.currentTask.startDate),
+                finishDate: this.getDatetimeLocal(this.currentTask.finishDate),
+              });
+          },
+          (error) => {
+            this.router.navigate(['/tasks']);
+            this.messageService.error(error);
+          });
     }
+  }
+
+  private initializeForm() {
+    this.taskForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.maxLength(20)]],
+      comment: [''],
+      startDate: ['', Validators.required],
+      finishDate: ['', Validators.required],
+    });
   }
 
   get formControls() {
     return this.taskForm.controls;
   }
 
+  private getDatetimeLocal(date) {
+    return new Date(date).toISOString().slice(0, -5);
+  }
+
   saveTask() {
+    if (this.taskForm.invalid) {
+      return;
+    }
     this.saving = true;
-    const action = this.task.id ? 'update' : 'create';
-    this.taskService[action](this.task)
+    this.currentTask.name = this.formControls.name.value;
+    this.currentTask.startDate = new Date(this.formControls.startDate.value).toISOString();
+    this.currentTask.finishDate = new Date(this.formControls.finishDate.value).toISOString();
+    this.currentTask.comment = this.formControls.comment.value;
+
+    const action = this.currentTask._id ? 'update' : 'create';
+    this.taskService[action](this.currentTask)
       .subscribe(() => {
-        this.saving = false;
-        this.router.navigate(['tasks']);
+        this.router.navigate(['/tasks']);
         this.publishService.publish('tasks-updated');
       });
+    this.saving = false;
   }
 }

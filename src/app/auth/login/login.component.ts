@@ -12,16 +12,16 @@ import { MessageService } from 'src/app/shared/service/message.service';
 })
 
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  returnUrl = '/tasks';
-  loading = false;
+  public loginForm: FormGroup;
+  public returnUrl = '/tasks';
+  public loading = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService,
     private messageService: MessageService
-    ) {
+  ) {
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/tasks']);
     }
@@ -46,10 +46,11 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authenticationService.authUser(this.formControls.login.value, this.formControls.password.value)
       .pipe(first())
-      .subscribe((data) => {
-        this.router.navigate([this.returnUrl]);
-        this.loading = false;
-      },
+      .subscribe(
+        (data) => {
+          this.router.navigate([this.returnUrl]);
+          this.loading = false;
+        },
         error => {
           this.messageService.error(error);
           this.loading = false;

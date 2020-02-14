@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { TaskService } from 'src/app/shared/service/task.service';
 import { UserTask } from 'src/app/shared/_model/UserTask';
 import { first } from 'rxjs/operators';
@@ -12,12 +12,12 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit, OnDestroy {
   public taskList: Array<UserTask>;
-  public selectedTask: UserTask = new UserTask();
+  public selectedTask: UserTask;
   public subscription: Subscription;
   public loading = false;
-  returnUrl: string;
+  public returnUrl: string;
 
   constructor(
     private taskService: TaskService,
@@ -25,39 +25,56 @@ export class TaskComponent implements OnInit {
     private router: Router,
     private publishService: PublishService
   ) { }
+
   ngOnInit() {
-    this.getTasks();
+    this.loadTasks();
     this.subscription =
-      this.publishService.on('tasks-updated').subscribe(() => this.getTasks());
+      this.publishService.on('tasks-updated').subscribe(() => this.loadTasks());
   }
 
-  getTasks() {
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  private loadTasks() {
     this.taskService.findAll()
       .pipe(first())
-      .subscribe((data) => {
-        this.taskList = data.user.taskList;
-      },
+      .subscribe(
+        (data) => {
+          this.taskList = data.user.taskList;
+        },
         error => {
           this.messageService.error(error);
           this.taskList = [];
         });
   }
 
-  deleteTask(id: number) {
+  deleteTask(id: string) {
     this.loading = true;
-    this.taskService.delete(id).subscribe(() => {
-      this.taskList = this.taskList.filter(x => x.id !== id);
-    });
+    console.log('this.selectedTask.id ', this.selectedTask._id);
+    console.log('deleteTask(id: string)  ', id);
+    this.taskService.deleteTaskById(id)
+      .subscribe(
+        () => {
+          this.taskList = this.taskList.filter(x => x._id !== id);
+        },
+        (error) => {
+          this.messageService.error(error);
+          this.taskList = [];
+        });
     this.loading = false;
   }
 
-  getSelected(task: UserTask, id: string) {
-    return task === this.selectedTask;
+  getSelected(task: UserTask) {
+    return this.selectedTask = task;
   }
 
-  edit(task: UserTask) {
-    const taskId = Number(task.id);
-    this.router.navigate([`/tasks/edit/${taskId}`]);
+  edit(event, task: UserTask) {
+    if (!event.target.className.includes('delete-task-td')) {
+      console.log('this.selectedTask ', task._id);
+      const taskId = task._id;
+      this.router.navigate([`/tasks/edit/${taskId}`]);
+    }
   }
 
 }

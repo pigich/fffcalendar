@@ -26,22 +26,25 @@ export class TaskService extends BaseApi {
     }
   }
 
-  findById(id: number) {
-    console.log('user id ', this.userId);
-    return this.get(`tasks/${id}?id=${this.userId}`);
+  findById(id: string): Observable<BaseData> {
+    return this.get(`tasks/${id}?userId=${this.userId}`)
+      .pipe(map((data: BaseData) => {
+        return data ? data : undefined;
+      }
+      ));
   }
 
   create(task: any) {
-    return this.http.post<any>(`tasks`, task);
+    return this.put(`tasks/create`, { userId: this.userId, task });
   }
 
   update(task: any) {
-    return this.http.put<any>(`tasks/${task.id}`, task);
+    return this.put(`tasks/update`, { userId: this.userId, task });
   }
 
-  delete(task: any) {
-    return this.http.delete<any>(`tasks/${task.id}`);
+  // if the name of method  will equal to name of http method then will be recursion !!!
+  deleteTaskById(id: string) {
+    return this.delete(`tasks/delete/${id}?userId=${this.userId}`);
   }
-
 }
 

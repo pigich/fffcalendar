@@ -10,6 +10,7 @@ const userRotes = require('./controler/UserController');
 const taskRotes = require('./controler/TaskController');
 const props = require('./config/properties');
 
+// FIXME: refactor this to close connections
 mongoose.connect(props.MONGO_URL, { useCreateIndex: true, useUnifiedTopology: true, useNewUrlParser: true });
 var mdb = mongoose.connection;
 
