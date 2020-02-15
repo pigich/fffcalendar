@@ -1,46 +1,47 @@
-<div class="add-task">
-  <div class="card">
-    <form [formGroup]="taskForm" (ngSubmit)="saveTask()" class="card">
-      <div class="form-header">{{title}}</div>
-      <div class="form-control">
+<form [formGroup]="taskForm" (ngSubmit)="saveTask()" class="card">
+  <div class="task-container">
+    <div class="form-header">{{title}}</div>
+    <div class="form-task-body">
+      <div class="form-task-control">
         <label class="label" for="name">name:</label>
-        <input type="text" formControlName="name" 
+        <input type="text" formControlName="name"
           [ngClass]="{'has-error': formControls.name.invalid && formControls.name.touched }" />
         <div class="validation" *ngIf="formControls.name.invalid && formControls.name.touched">
           <small class="validation" *ngIf="formControls.name.errors.required">name is required</small>
           <small class="validation" *ngIf="formControls.name.errors.maxlength">Max length 20 symbols</small>
         </div>
       </div>
-      <div class="form-control">
+      <div class="form-task-control">
         <label class="label" for="startDate">Start Date:</label>
         <!-- <input formControlName="startDate" [value]="currentTask.startDate  | date: 'yyyy-MM-ddThh:mm'" -->
-        <input formControlName="startDate" 
-          type="datetime-local" required />
+        <input formControlName="startDate" type="datetime-local" required />
         <div class="validation" *ngIf="formControls.startDate.invalid && formControls.startDate.touched">
           <small class="validation" *ngIf="formControls.startDate.errors.required">Fill the date and time</small>
         </div>
       </div>
-      <div class="form-control">
+      <div class="form-task-control">
         <label class="label" for="finishDate">End Date:</label>
         <!-- <input formControlName="finishDate" [value]="currentTask.finishDate | date: 'yyyy-MM-ddThh:mm'" -->
-        <input formControlName="finishDate" 
-          type="datetime-local" required />
+        <input formControlName="finishDate" type="datetime-local" required />
         <div class="validation" *ngIf="formControls.finishDate.invalid && formControls.finishDate.touched">
           <small class="validation" *ngIf="formControls.finishDate.errors.required">Fill the date and time</small>
         </div>
       </div>
-      <div class="form-control">
+      <div class="form-task-control">
         <label class="label" for="comment">comment:</label>
-        <input type="text" formControlName="comment" [ngClass]="{ 
-          'has-error': formControls.comment.invalid && formControls.comment.touched }" />
+        <textarea formControlName="comment" [ngClass]="{ 
+        'has-error': formControls.comment.invalid && formControls.comment.touched }" rows="20">
+       </textarea>
         <div class="validation" *ngIf="formControls.comment.invalid && formControls.comment.touched">
           <small class="validation" *ngIf="formControls.comment.errors.maxlength">Max length 100 symbols</small>
         </div>
       </div>
-      <button [disabled]="saving" class="btn btn-primary" >
+    </div>
+    <div class="form-footer">
+      <button [disabled]="saving" class="btn btn-primary btn-sm">
         Save
       </button>
-      <a class="btn btn-primary" routerLink="/tasks">Cancel</a>
-    </form>
+      <a class="btn btn-outline btn-sm" routerLink="/tasks">Cancel</a>
+    </div>
   </div>
-</div>
+</form>

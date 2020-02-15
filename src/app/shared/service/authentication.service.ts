@@ -35,6 +35,7 @@ export class AuthenticationService extends BaseApi {
 
   logout() {
     localStorage.removeItem('currentUserData');
+    sessionStorage.removeItem('selectedTask');
     this.currentUserSubject.next(null);
   }
 }

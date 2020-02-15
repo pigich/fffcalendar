@@ -1,4 +1,37 @@
-form {
-  max-width: 97%;
-  margin: 0 auto;
+.task-container {
+  border-radius: 10px;
+  height: 560px;
+  width: 350px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
+  background-color: white;
+  margin: auto;
+}
+
+.form-task-body {
+  display: flex;
+  flex: 4;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: space-between;
+}
+
+.form-task-control {
+  display: flex;
+  width: 300px;
+  flex: 1;
+  flex-flow: column wrap;
+  &.has-error {
+    color: var(--danger-color);
+    input {
+      border-color: var(--danger-color);
+    }
+  }
+}
+.form-task-control textarea {
+  width: 287.2‬px;
+  height: 75px;
+  resize: none;
 }

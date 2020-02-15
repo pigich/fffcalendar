@@ -1,5 +1,10 @@
-form {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
+.login-container {
+  border-radius: 10px;
+  height: 300px;
+  width: 250px;
+  display: inline-flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: space-around;
+  background-color: white;
+}

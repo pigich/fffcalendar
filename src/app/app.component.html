@@ -1,16 +1,22 @@
-<div class="content" role="main">
-  <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUserData">
-    <div class="navbar-nav">
-        <button class="nav-item nav-link" (click)="logout()">Logout</button>
+  <header class="header">
+    <div class="logo">
+      <h1>fffcalendar</h1>
     </div>
-</nav>
-  <p>
-    fffcalendar
-  </p>
-</div>
-<div>
+    <nav>
+      <div *ngIf="currentUserData">
+        <button class="btn btn-outline" (click)="logout()">Logout</button>
+      </div>
+    </nav>
+  </header>
 
-</div>
-<app-message></app-message>
-<router-outlet>
-</router-outlet>
+  <section>
+    <article>
+      <div class="flex-container">
+        <app-message></app-message>
+        <router-outlet> </router-outlet>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+  </footer>

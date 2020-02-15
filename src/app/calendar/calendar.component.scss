@@ -1,0 +1,95 @@
+.calendar-date {
+    margin: 10px 0;
+  }
+  
+  .calendar-month,
+  .calendar-year,
+  .calendar-set {
+    padding: 10px;
+    margin: 5px;
+    font-size: 1.2em;
+    border: 0;
+    background: #33d5fd;
+    color: #fff;
+  }
+  
+  .calendar {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .calendar tr td:nth-child(6),
+  td:nth-child(7) {
+    background: #dbd5d5;
+  }
+  .calendar tr.head td {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    background: #4ea04b;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .calendar tr.day td {
+    border: 1.1px solid rgb(206, 205, 205);
+    width: 14.28%;
+    padding: 15px 5px;
+    vertical-align: top;
+  }
+  
+  .calendar tr.day td:hover {
+    background: #faf1cf;
+  }
+  
+  .calendar tr td.blank {
+    background: #f5f5f5;
+  }
+  
+  .calendar .dd {
+    font-size: 1.2em;
+    color: #999;
+  }
+  
+  .calendar .evt {
+    margin-top: 5px;
+    font-size: 0.8em;
+    font-weight: bold;
+    overflow: hidden;
+    color: #ff5d5d;
+  }
+  
+  .calendar-event form {
+    padding: 15px;
+    margin-top: 20px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+  }
+  .calendar-event h1 {
+    color: #333;
+    padding: 0;
+    margin: 0;
+  }
+  .evt-date {
+    color: #999;
+    margin: 10px 0;
+  }
+  .calendar-event textarea {
+    display: block;
+    box-sizing: padding-box;
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    resize: none;
+  }
+  .calendar-event input[type="button"],
+  .calendar-event input[type="submit"] {
+    padding: 10px;
+    margin: 5px;
+    font-size: 1.2em;
+    border: 0;
+    background: #ea4c4c;
+    color: #fff;
+  }
+  

@@ -1,5 +1,19 @@
-form {
-    max-width: 97%;
-    margin: 0 auto;
-  }
-  
+.sharing-container {
+  border-radius: 10px;
+  height: 300px;
+  width: 250px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
+  background-color: white;
+  margin: auto;
+}
+
+.form-share-body {
+  display: flex;
+  flex: 2;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: space-between;
+}

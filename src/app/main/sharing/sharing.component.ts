@@ -29,7 +29,7 @@ export class SharingComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
-    const taskId = this.route.snapshot.params.id;
+    this.title = 'Share Task';
   }
 
   private initializeForm() {

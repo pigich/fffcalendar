@@ -1,8 +1,9 @@
-<div class="add-task">
-    <div class="card">
-        <form [formGroup]="taskForm" (ngSubmit)="shareTask()" class="card">
-            <div class="form-header">{{title}}</div>
+<form [formGroup]="taskForm" (ngSubmit)="shareTask()">
+    <div class="sharing-container">
+        <div class="form-header">{{title}}
             <app-message></app-message>
+        </div>
+        <div class="form-share-body">
             <div class="form-control">
                 <label class="label" for="name">Enter user login to share task:</label>
                 <input type="text" formControlName="login"
@@ -14,10 +15,12 @@
                     </small>
                 </div>
             </div>
-            <button [disabled]="saving" class="btn btn-primary">
+        </div>
+        <div class="form-footer">
+            <button [disabled]="saving" class="btn btn-primary btn-sm">
                 Share
             </button>
-            <a class="btn btn-primary" routerLink="/tasks">Cancel</a>
-        </form>
+            <a class="btn btn-outline btn-sm" routerLink="/tasks">Cancel</a>
+        </div>
     </div>
-</div>
+</form>
