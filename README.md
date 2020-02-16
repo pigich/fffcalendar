@@ -1,5 +1,11 @@
 # Fffcalendar
+----------------------------------------------------------------------------------------------------
+There are two test users:
+ 
+ login: qwe   password: 123
+ login: asd   password: 123
 
+----------------------------------------------------------------------------------------------------
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.24.
 
 ## Development server

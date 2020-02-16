@@ -1,34 +1,35 @@
-  <div class="task-menu">
+<div class="task-menu">
 
-    <div>
-      <form [formGroup]="findForm" (ngSubmit)="findTask()">
-        <div class="findTask">
-          <a routerLink="add" class="btn btn-outline">Add task</a>
-          <div class="form-control">
-            <input type="text" formControlName="find"
-              [ngClass]="{'has-error': formControls.find.invalid && formControls.find.touched }" />
-            <div class="validation" *ngIf="formControls.find.invalid && formControls.find.touched">
-              <small class="validation" *ngIf="formControls.find.errors.maxlength">Max length 25 symbols</small>
-            </div>
-          </div>
-          <div class="selectKey">
-            <select (change)="selectKey($event.target.value)">
-              <option value="" disabled>Choose</option>
-              <option *ngFor="let key of objectKeys(task)" value={{key}}>
-                {{key}}
-              </option>
-            </select>
-          </div>
-          <div>
-            <button [disabled]="loading" class="btn btn-primary btn-sm" style="margin-left: 10px;">
-              Find
-            </button>
+  <div>
+    <form [formGroup]="findForm" (ngSubmit)="findTask()">
+      <div class="findTask">
+        <a routerLink="add" class="btn btn-outline">Add task</a>
+        <div class="form-control">
+          <input type="text" formControlName="find"
+            [ngClass]="{'has-error': formControls.find.invalid && formControls.find.touched }" />
+          <div class="validation" *ngIf="formControls.find.invalid && formControls.find.touched">
+            <small class="validation" *ngIf="formControls.find.errors.maxlength">Max length 25 symbols</small>
           </div>
         </div>
-      </form>
-    </div>
+        <div class="selectKey">
+          <select (change)="selectKey($event.target.value)">
+            <option value="" disabled>Choose</option>
+            <option *ngFor="let key of objectKeys(task)" value={{key}}>
+              {{key}}
+            </option>
+          </select>
+        </div>
+        <div>
+          <button [disabled]="loading" class="btn btn-primary btn-sm" style="margin-left: 10px;">
+            Find
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
+</div>
 
+<div class="task-table">
   <table>
     <thead>
       <tr>
@@ -42,9 +43,8 @@
       </tr>
     </thead>
     <tbody>
-      <!-- <tr *ngFor="let task of pageOfItems; let i = index" (mouseover)="getSelectedTask(task)" -->
-      <tr *ngFor="let task of taskList | paginate: { itemsPerPage: 5, currentPage: p } let i = index" (mouseover)="getSelectedTask(task)"
-        (click)="editTask($event, task)">
+      <tr *ngFor="let task of taskList | paginate: { itemsPerPage: 5, currentPage: p } let i = index"
+        (mouseover)="getSelectedTask(task)" (click)="editTask($event, task)">
         <td>{{ i + 1 }}</td>
         <td>{{ task.name }}</td>
         <td>{{ task.startDate | fffMoment: 'DD-MM-YYYY HH:mm' }}</td>
@@ -64,8 +64,8 @@
     </tbody>
   </table>
   <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+</div>
+
 <div class="view-side-form">
   <router-outlet></router-outlet>
 </div>
-
-

@@ -13,6 +13,16 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  align-content: flex-start;
+  align-items: flex-start;
+  flex: 2, 1, 450px;
+}
+
+.article-container {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
 }
 
 .header {
@@ -71,7 +81,8 @@ body {
 }
 
 input[type="datetime-local"],
-textarea, select {
+textarea,
+select {
   padding: 0.4rem;
   border: 1px solid #ccc;
 }
@@ -159,7 +170,21 @@ button {
   color: #333;
 }
 
+.message-container {
+  margin-top: 10px;
+  height: 30px;
+  display: flex;
+  flex-shrink: initial;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: center;
+  flex: 1, 1, 30px;
+}
+
 .message-danger {
+  display: inline-flex;
+  flex-flow: row wrap;
+  justify-content: center;
   background: var(--danger-color);
   color: #fff;
   text-align: center;

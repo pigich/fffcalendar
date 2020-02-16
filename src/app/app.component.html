@@ -1,22 +1,25 @@
-  <header class="header">
-    <div class="logo">
-      <h1>fffcalendar</h1>
+<header class="header">
+  <div class="logo">
+    <h1>fffcalendar</h1>
+  </div>
+  <nav>
+    <div *ngIf="currentUserData">
+      <button class="btn btn-outline" (click)="logout()">Logout</button>
     </div>
-    <nav>
-      <div *ngIf="currentUserData">
-        <button class="btn btn-outline" (click)="logout()">Logout</button>
-      </div>
-    </nav>
-  </header>
+  </nav>
+</header>
 
-  <section>
-    <article>
-      <div class="flex-container">
-        <app-message></app-message>
-        <router-outlet> </router-outlet>
-      </div>
-    </article>
-  </section>
 
-  <footer>
-  </footer>
+<section>
+  <article class="article-container" >
+    <div class="message-container">
+      <app-message></app-message>
+    </div>
+    <div class="flex-container">
+      <router-outlet> </router-outlet>
+    </div>
+  </article>
+</section>
+
+<footer>
+</footer>
