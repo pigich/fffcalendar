@@ -4,24 +4,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { MessageComponent } from './message/message.component';
 import { CommonModule } from '@angular/common';
 import { JwPaginationComponent } from 'jw-angular-pagination';
+import { MomentPipe } from './_pipe/moment.pipe';
 
 @NgModule({
   declarations: [
     MessageComponent,
     JwPaginationComponent,
+    MomentPipe,
   ],
   imports: [
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   exports: [
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
     MessageComponent,
-    JwPaginationComponent
+    JwPaginationComponent,
+    MomentPipe,
   ]
 })
 export class SharedModule { }

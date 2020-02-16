@@ -42,13 +42,16 @@ export class TaskService extends BaseApi {
     return this.put(`tasks/update`, { userId: this.userId, task });
   }
 
-  // if the name of method  will equal to the name of http method then will be recursion !!!
   deleteTaskById(id: string) {
     return this.delete(`tasks/delete/${id}?userId=${this.userId}`);
   }
 
   share(login: string, task: any) {
     return this.put(`tasks/share`, { login, task });
+  }
+
+  filterTask(key: string, value: string): Observable<BaseData> {
+    return this.get(`tasks/filter/task?userId=${this.userId}&taskKey=${key}&keyValue=${value}`);
   }
 }
 

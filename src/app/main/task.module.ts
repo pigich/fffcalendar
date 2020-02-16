@@ -5,6 +5,7 @@ import { AddTaskComponent } from './add-task/add-task.component';
 import { SharedModule } from '../shared/shared.module';
 import { TaskRoutingModule } from './task-routing.module';
 import { SharingComponent } from './sharing/sharing.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SharingComponent } from './sharing/sharing.component';
   imports: [
     SharedModule,
     CommonModule,
-    TaskRoutingModule
+    TaskRoutingModule,
+    NgxPaginationModule
   ],
   exports: [
     AddTaskComponent,

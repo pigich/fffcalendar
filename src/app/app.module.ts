@@ -16,6 +16,7 @@ import { TaskModule } from './main/task.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskService } from './shared/service/task.service';
 import { PublishService } from './shared/service/publish.service';
+import { MomentPipe } from './shared/_pipe/moment.pipe';
 
 @NgModule({
   declarations: [
@@ -28,9 +29,10 @@ import { PublishService } from './shared/service/publish.service';
     AuthModule,
     SharedModule,
     TaskModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [
+    MomentPipe,
     UserService,
     TaskService,
     PublishService,

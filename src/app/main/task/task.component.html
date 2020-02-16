@@ -1,7 +1,32 @@
-<div class="tasks">
   <div class="task-menu">
-    <a routerLink="add" class="btn btn-outline">Add task</a>
-    <a routerLink="share" class="btn btn-outline">Share tasks</a>
+
+    <div>
+      <form [formGroup]="findForm" (ngSubmit)="findTask()">
+        <div class="findTask">
+          <a routerLink="add" class="btn btn-outline">Add task</a>
+          <div class="form-control">
+            <input type="text" formControlName="find"
+              [ngClass]="{'has-error': formControls.find.invalid && formControls.find.touched }" />
+            <div class="validation" *ngIf="formControls.find.invalid && formControls.find.touched">
+              <small class="validation" *ngIf="formControls.find.errors.maxlength">Max length 25 symbols</small>
+            </div>
+          </div>
+          <div class="selectKey">
+            <select (change)="selectKey($event.target.value)">
+              <option value="" disabled>Choose</option>
+              <option *ngFor="let key of objectKeys(task)" value={{key}}>
+                {{key}}
+              </option>
+            </select>
+          </div>
+          <div>
+            <button [disabled]="loading" class="btn btn-primary btn-sm" style="margin-left: 10px;">
+              Find
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 
   <table>
@@ -12,17 +37,19 @@
         <th>Start date</th>
         <th>Finish date</th>
         <th>Comments</th>
-        <th></th>
-        <th></th>
+        <th colspan="2">
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let task of taskList; let i = index" (mouseover)="getSelectedTask(task)" (click)="editTask($event, task)">
+      <!-- <tr *ngFor="let task of pageOfItems; let i = index" (mouseover)="getSelectedTask(task)" -->
+      <tr *ngFor="let task of taskList | paginate: { itemsPerPage: 5, currentPage: p } let i = index" (mouseover)="getSelectedTask(task)"
+        (click)="editTask($event, task)">
         <td>{{ i + 1 }}</td>
         <td>{{ task.name }}</td>
-        <td>{{ task.startDate | date: "MMMM dd yyyy  hh:mm" }}</td>
-        <td>{{ task.finishDate | date: "MMMM dd yyyy  hh:mm" }}</td>
-        <td>{{ task.comment }}</td>
+        <td>{{ task.startDate | fffMoment: 'DD-MM-YYYY HH:mm' }}</td>
+        <td>{{ task.finishDate | fffMoment: 'DD-MM-YYYY HH:mm' }}</td>
+        <td>{{ trancateString(task.comment)  }}</td>
         <td>
           <button (click)="shareTask(task._id)" [disabled]="loading" class="share-task-td btn btn-sm">
             share
@@ -36,7 +63,9 @@
       </tr>
     </tbody>
   </table>
-</div>
+  <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
 <div class="view-side-form">
   <router-outlet></router-outlet>
 </div>
+
+

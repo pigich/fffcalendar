@@ -8,7 +8,7 @@
           [ngClass]="{'has-error': formControls.name.invalid && formControls.name.touched }" />
         <div class="validation" *ngIf="formControls.name.invalid && formControls.name.touched">
           <small class="validation" *ngIf="formControls.name.errors.required">name is required</small>
-          <small class="validation" *ngIf="formControls.name.errors.maxlength">Max length 20 symbols</small>
+          <small class="validation" *ngIf="formControls.name.errors.maxlength">Max length 15 symbols</small>
         </div>
       </div>
       <div class="form-task-control">

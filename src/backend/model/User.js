@@ -93,5 +93,29 @@ userSchema.statics.shareTask = async (userLogin, task) => {
     return tasks;
 }
 
+userSchema.statics.filterTask = async (userId, key, value) => {
+    let tasks = await User.aggregate([
+        { $match: { id: Number(userId) } },
+        { $unwind: "$taskList" },
+        { $match: { [`taskList.${key}`]: { '$regex': value, '$options': 'i' } } },
+        {
+            $group: {
+                _id: '$user',
+                taskList: {
+                    $push: {
+                        _id: '$taskList._id',
+                        name: "$taskList.name",
+                        startDate: "$taskList.startDate",
+                        finishDate: "$taskList.finishDate",
+                        comment: "$taskList.comment",
+                    }
+                }
+            }
+        },
+        { $project: { _id: 0, taskList: 1 } }
+    ])
+    return tasks[0];
+}
+
 const User = mongoose.model('User', userSchema)
 module.exports = User;

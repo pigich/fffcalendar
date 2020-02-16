@@ -6,6 +6,7 @@ import { PublishService } from 'src/app/shared/service/publish.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserTask } from 'src/app/shared/_model/UserTask';
 import { MessageService } from 'src/app/shared/service/message.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-task',
@@ -20,6 +21,8 @@ export class AddTaskComponent implements OnInit {
   public newTask: UserTask;
   public saving = false;
   public taskForm: FormGroup;
+  localStartDate: any;
+  localFinishDate: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,10 +43,12 @@ export class AddTaskComponent implements OnInit {
     if (!taskId) {
       this.title = 'Add Task';
       this.newTask = new UserTask();
+      this.localStartDate = moment().local().format('YYYY-MM-DDTHH:mm');
+      this.localFinishDate = moment().local().format('YYYY-MM-DDTHH:mm');
       this.taskForm.patchValue(
         {
-          startDate: this.getDatetimeLocal(this.newTask.startDate),
-          finishDate: this.getDatetimeLocal(this.newTask.finishDate),
+          startDate: this.localStartDate,
+          finishDate: this.localFinishDate,
         });
     }
     if (taskId) {
@@ -52,12 +57,14 @@ export class AddTaskComponent implements OnInit {
         .subscribe(
           (data) => {
             this.currentTask = data.user.taskList[0];
+            this.localStartDate = moment(this.currentTask.startDate).local().format('YYYY-MM-DDTHH:mm');
+            this.localFinishDate = moment(this.currentTask.finishDate).local().format('YYYY-MM-DDTHH:mm');
             this.taskForm.patchValue(
               {
                 name: this.currentTask.name,
                 comment: this.currentTask.comment,
-                startDate: this.getDatetimeLocal(this.currentTask.startDate),
-                finishDate: this.getDatetimeLocal(this.currentTask.finishDate),
+                startDate: this.localStartDate,
+                finishDate: this.localFinishDate,
               });
           },
           (error) => {
@@ -69,7 +76,7 @@ export class AddTaskComponent implements OnInit {
 
   private initializeForm() {
     this.taskForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(20)]],
+      name: ['', [Validators.required, Validators.maxLength(15)]],
       comment: [''],
       startDate: ['', Validators.required],
       finishDate: ['', Validators.required],
@@ -80,18 +87,16 @@ export class AddTaskComponent implements OnInit {
     return this.taskForm.controls;
   }
 
-  private getDatetimeLocal(date) {
-    return new Date(date).toISOString().slice(0, -5);
-  }
-
   saveTask() {
     if (this.taskForm.invalid) {
       return;
     }
     this.saving = true;
     this.currentTask.name = this.formControls.name.value;
-    this.currentTask.startDate = new Date(this.formControls.startDate.value).toISOString();
-    this.currentTask.finishDate = new Date(this.formControls.finishDate.value).toISOString();
+    let m = moment(this.formControls.startDate.value).utc();
+    this.currentTask.startDate = m;
+    m = moment(this.formControls.finishDate.value).utc();
+    this.currentTask.finishDate = m;
     this.currentTask.comment = this.formControls.comment.value;
 
     const action = this.currentTask._id ? 'update' : 'create';
