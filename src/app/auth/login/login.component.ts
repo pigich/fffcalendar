@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/shared/service/authentication.service';
 import { MessageService } from 'src/app/shared/service/message.service';
@@ -20,7 +20,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private route: ActivatedRoute
   ) {
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/tasks']);
@@ -28,6 +29,12 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params.accessDenied) {
+        this.messageService.error('You need to login first');
+      }
+    });
+
     this.loginForm = this.formBuilder.group({
       login: ['', [Validators.required, Validators.maxLength(5), Validators.pattern('[a-zA-Z ]*')]],
       password: ['', Validators.required]

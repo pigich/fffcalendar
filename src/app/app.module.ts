@@ -17,11 +17,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskService } from './shared/service/task.service';
 import { PublishService } from './shared/service/publish.service';
 import { MomentPipe } from './shared/_pipe/moment.pipe';
+import { AuthGuardService } from './shared/service/auth-guard.service';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalendarComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { MomentPipe } from './shared/_pipe/moment.pipe';
     PublishService,
     AuthenticationService,
     MessageService,
+    AuthGuardService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
